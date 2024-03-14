@@ -43,6 +43,18 @@ func (p *proxyServer) Add(ctx context.Context, req *pb.AddRequest) (*pb.Operatio
 	return resp, nil
 }
 
+// Divide is a proxy method that forwards the request to server2 and returns the response
+func (p *proxyServer) Divide(ctx context.Context, req *pb.DivideRequest) (*pb.OperationResponse, error) {
+	// Forward the request to Steve and get the response
+	resp, err := p.calcClient.Divide(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	// Return the response from Steve back to the client (Bob)
+	return resp, nil
+}
+
 func RunServer() error {
 	// Address of the server2 server
 	server2addr := "localhost:8889"
